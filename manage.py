@@ -32,7 +32,8 @@ def _make_context():
 class SSLServer(Command):
     def run(self, *args, **kwargs):
         ssl_context = ('./certificate.crt', './private.key')
-        app.run(ssl_context=ssl_context, *args, **kwargs)
+        #app.run(ssl_context=ssl_context, *args, **kwargs)
+        app.run(host='0.0.0.0', port=int(os.environ['PORT'], *args, **kwargs)
 
 
 manager = Manager(app)
