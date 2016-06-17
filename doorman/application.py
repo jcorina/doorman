@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 
 from flask import Flask, render_template
 
@@ -63,7 +64,11 @@ def register_loggers(app):
     import logging
     from logging.handlers import WatchedFileHandler
 
-    handler = WatchedFileHandler(app.config['DOORMAN_LOGGING_FILENAME'])
+    log_fname = app.config['DOORMAN_LOGGING_FILENAME']
+    if log_fname == 'sys.stdout':
+    	handler = logging.StreamHandler(log_fname)
+    else:
+        handler = WatchedFileHandler(log_fname)
     levelname = app.config['DOORMAN_LOGGING_LEVEL']
     if levelname in ('DEBUG', 'INFO', 'WARN', 'WARNING', 'ERROR', 'CRITICAL'):
         handler.setLevel(getattr(logging, levelname))
